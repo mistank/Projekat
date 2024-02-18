@@ -33,7 +33,12 @@ namespace Client.Controller
                     MainController.Instance.frmMain.Dispose();
                     LoginController.Instance.frmLogin.Dispose();
                 }
+                else
+                {
+                    MessageBox.Show(res.Exception.Message);
+                }
             }
+
         }
         public void ShowFrmLogin()
         {

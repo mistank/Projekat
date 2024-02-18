@@ -26,15 +26,15 @@ namespace Client.UserControls
         {
             if (departureDateDp.Value.Date<DateTime.Now.Date || departureDateDp.Value.Date >= arrivalDataDp.Value.Date)
             {
-                MessageBox.Show("Departure date must not be in the past and has to be before the arrival date");
+                MessageBox.Show("Departure date must not be in the past and has to be before the arrival date","Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else if (!priceTb.Text.All(char.IsDigit) || string.IsNullOrEmpty(priceTb.Text))
             {
-                MessageBox.Show("Price format is not correct");
+                MessageBox.Show("Price format is not correct", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else if (string.IsNullOrEmpty(destinationTb.Text))
             {
-                MessageBox.Show("Enter destination");
+                MessageBox.Show("Enter destination", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
