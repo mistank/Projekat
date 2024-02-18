@@ -22,6 +22,25 @@ namespace Client
     {
         private bool showPassword = false;
         private User User {  get; set; }
+        private bool dragging = false;
+        private Point startPoint = new Point(0, 0);
+        private void FrmLogin_MouseDown(object sender, MouseEventArgs e)
+        {
+            dragging = true;
+            startPoint = new Point(e.X, e.Y);
+        }
+        private void FrmLogin_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (dragging)
+            {
+                Point p = PointToScreen(e.Location);
+                Location = new Point(p.X - startPoint.X, p.Y - startPoint.Y);
+            }
+        }
+        private void FrmLogin_MouseUp(object sender, MouseEventArgs e)
+        {
+            dragging = false;
+        }
         public FrmLogin()
         {
             InitializeComponent();

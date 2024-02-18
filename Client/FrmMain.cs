@@ -17,6 +17,25 @@ namespace Client
     public partial class FrmMain : Form
     {
         private User loggedUser;
+        private static bool dragging = false;
+        private static Point startPoint = new Point(0, 0);
+        public void FrmMain_MouseDown(object sender, MouseEventArgs e)
+        {
+            dragging = true;
+            startPoint = new Point(e.X, e.Y);
+        }
+        public void FrmMain_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (dragging)
+            {
+                Point p = PointToScreen(e.Location);
+                Location = new Point(p.X - startPoint.X, p.Y - startPoint.Y);
+            }
+        }
+        public  void FrmMain_MouseUp(object sender, MouseEventArgs e)
+        {
+            dragging = false;
+        }
         public FrmMain(User user)
         {
             InitializeComponent();
