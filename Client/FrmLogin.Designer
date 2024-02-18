@@ -1,0 +1,155 @@
+﻿using System.Windows.Forms;
+
+namespace Client
+{
+    partial class FrmLogin
+    {
+        //PROPERTIES
+        public TextBox UsernameTb { get { return usernameTb; } set { usernameTb = value; } }
+        public TextBox PasswordTb { get { return passwordTb; } set { passwordTb = value; } }
+        public Button LoginBtn { get { return loginBtn; } }
+
+
+
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.loginPnl = new System.Windows.Forms.Panel();
+            this.passwordTb = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.loginBtn = new System.Windows.Forms.Button();
+            this.usernameTb = new System.Windows.Forms.TextBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.loginPnl.SuspendLayout();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // loginPnl
+            // 
+            this.loginPnl.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.loginPnl.BackColor = System.Drawing.Color.Transparent;
+            this.loginPnl.Controls.Add(this.passwordTb);
+            this.loginPnl.Controls.Add(this.label4);
+            this.loginPnl.Controls.Add(this.loginBtn);
+            this.loginPnl.Controls.Add(this.usernameTb);
+            this.loginPnl.Location = new System.Drawing.Point(139, 241);
+            this.loginPnl.Name = "loginPnl";
+            this.loginPnl.Size = new System.Drawing.Size(624, 647);
+            this.loginPnl.TabIndex = 7;
+            // 
+            // passwordTb
+            // 
+            this.passwordTb.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.passwordTb.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.passwordTb.Location = new System.Drawing.Point(74, 294);
+            this.passwordTb.Name = "passwordTb";
+            this.passwordTb.Size = new System.Drawing.Size(451, 35);
+            this.passwordTb.TabIndex = 15;
+            // 
+            // label4
+            // 
+            this.label4.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Franklin Gothic Medium", 25.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(50, 77);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(531, 65);
+            this.label4.TabIndex = 14;
+            this.label4.Text = "Login to Your Account";
+            // 
+            // loginBtn
+            // 
+            this.loginBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.loginBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.loginBtn.Location = new System.Drawing.Point(170, 489);
+            this.loginBtn.Name = "loginBtn";
+            this.loginBtn.Size = new System.Drawing.Size(279, 68);
+            this.loginBtn.TabIndex = 12;
+            this.loginBtn.Text = "Login";
+            this.loginBtn.UseVisualStyleBackColor = true;
+            // 
+            // usernameTb
+            // 
+            this.usernameTb.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.usernameTb.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.usernameTb.Location = new System.Drawing.Point(74, 205);
+            this.usernameTb.Name = "usernameTb";
+            this.usernameTb.Size = new System.Drawing.Size(451, 35);
+            this.usernameTb.TabIndex = 11;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.pictureBox1);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1671, 1128);
+            this.panel1.TabIndex = 8;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox1.Image = global::Client.Properties.Resources.login_page;
+            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(1671, 1128);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
+            // 
+            // FrmLogin
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.ClientSize = new System.Drawing.Size(1671, 1128);
+            this.Controls.Add(this.loginPnl);
+            this.Controls.Add(this.panel1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Name = "FrmLogin";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Form1";
+            this.loginPnl.ResumeLayout(false);
+            this.loginPnl.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.ResumeLayout(false);
+
+        }
+
+        #endregion
+        private System.Windows.Forms.Panel loginPnl;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button loginBtn;
+        private System.Windows.Forms.TextBox usernameTb;
+        private System.Windows.Forms.TextBox passwordTb;
+        private Panel panel1;
+        private PictureBox pictureBox1;
+    }
+}
+
