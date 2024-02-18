@@ -81,6 +81,8 @@ namespace Client.UserControls
             string name = (string)destinationsDgv.SelectedRows[0].Cells["DestinationName"].Value;
             string state = destinationsDgv.SelectedRows[0].Cells["State"].Value.ToString();
             destinationTb.Text = $"{name}, {state}";
+            searchDestinationTb.Text = "";
+            searchDestinationTb.Enabled = false;
         }
         private void searchDestinationTb_TextChanged(object sender, EventArgs e)
         {

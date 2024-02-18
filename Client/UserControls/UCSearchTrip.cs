@@ -154,10 +154,13 @@ namespace Client.UserControls
         }
         private void tripsDgv_DoubleClick(object sender, EventArgs e)
         {
-            editBtn.Enabled = true;
-            searchByCb.Enabled = false;
-            searchTb.Enabled = false;
-            SetFields();
+            if (tripsDgv.Rows.Count > 0)
+            {
+                editBtn.Enabled = true;
+                searchByCb.Enabled = false;
+                searchTb.Enabled = false;
+                SetFields();
+            }
         }
         public void SetFields()
         {
@@ -298,21 +301,24 @@ namespace Client.UserControls
         }
         private void destinationsDgv_DoubleClick(object sender, EventArgs e)
         {
-            int destinationId = (int)destinationsDgv.SelectedRows[0].Cells["Id"].Value;
-            if (!editBtn.Enabled)
+            if (destinationsDgv.Rows.Count > 0)
             {
-                tripsDgv.DataSource = SearchTrips(destinationId.ToString());
-                if (tripsDgv.Columns.Count > 0)
+                int destinationId = (int)destinationsDgv.SelectedRows[0].Cells["Id"].Value;
+                if (!editBtn.Enabled)
                 {
-                    tripsDgv.Columns["TableName"].Visible = false;
-                    tripsDgv.Columns["Values"].Visible = false;
-                    tripsDgv.Columns["Id"].Visible = false;
+                    tripsDgv.DataSource = SearchTrips(destinationId.ToString());
+                    if (tripsDgv.Columns.Count > 0)
+                    {
+                        tripsDgv.Columns["TableName"].Visible = false;
+                        tripsDgv.Columns["Values"].Visible = false;
+                        tripsDgv.Columns["Id"].Visible = false;
+                    }
                 }
-            }
-            else
-            {
-                int destinationRowIndex = destinationsDgv.SelectedRows[0].Index;
-                destinationTb.Text = destinationsDgv.Rows[destinationRowIndex].DataBoundItem.ToString();
+                else
+                {
+                    int destinationRowIndex = destinationsDgv.SelectedRows[0].Index;
+                    destinationTb.Text = destinationsDgv.Rows[destinationRowIndex].DataBoundItem.ToString();
+                }
             }
         }
         private void searchDestinationTb_TextChanged(object sender, EventArgs e)

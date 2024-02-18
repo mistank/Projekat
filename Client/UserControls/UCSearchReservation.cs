@@ -64,12 +64,16 @@ namespace Client.UserControls
         }
         private void LoadTripsDgv()
         {
-            tripsDgv.DataSource = SearchTrip();
-            if (tripsDgv.Columns.Count > 0)
+            var dataSource = SearchTrip();
+            if (dataSource != null)
             {
-                tripsDgv.Columns["TableName"].Visible = false;
-                tripsDgv.Columns["Values"].Visible = false;
-                tripsDgv.Columns["Id"].Visible = false;
+                tripsDgv.DataSource = dataSource;
+                if (tripsDgv.Columns.Count > 0)
+                {
+                    tripsDgv.Columns["TableName"].Visible = false;
+                    tripsDgv.Columns["Values"].Visible = false;
+                    tripsDgv.Columns["Id"].Visible = false;
+                }
             }
         }
         private void LoadSearchByComboBox()
@@ -125,17 +129,28 @@ namespace Client.UserControls
         }
         private void searchTb_TextChanged(object sender, EventArgs e)
         {
-            reservationsDgv.DataSource = SearchReservation(searchTb.Text);
-            if (reservationsDgv.Columns.Count > 0)
+            var dataSource = SearchReservation(searchTb.Text);
+            if (dataSource != null)
             {
-                reservationsDgv.Columns["TableName"].Visible = false;
-                reservationsDgv.Columns["Values"].Visible = false;
-                reservationsDgv.Columns["Id"].Visible = false;
+                reservationsDgv.DataSource = dataSource;
+                if (reservationsDgv.Columns.Count > 0)
+                {
+                    reservationsDgv.Columns["TableName"].Visible = false;
+                    reservationsDgv.Columns["Values"].Visible = false;
+                    reservationsDgv.Columns["Id"].Visible = false;
+                }
             }
         }
         private void searchTripTb_TextChanged(object sender, EventArgs e)
         {
-            tripsDgv.DataSource = SearchTrips(searchDestinationTb.Text);
+            var dataSource = SearchTrips(searchDestinationTb.Text);
+            if (dataSource != null)
+            {
+                tripsDgv.DataSource = dataSource;
+                tripsDgv.Columns["TableName"].Visible = false;
+                tripsDgv.Columns["Values"].Visible = false;
+                tripsDgv.Columns["Id"].Visible = false;
+            }
 
         }
         private void searchByCb_SelectedIndexChanged(object sender, EventArgs e)
@@ -191,11 +206,15 @@ namespace Client.UserControls
             if (editBtn.Enabled) SetTripFields(true);
             else
             {
-                reservationsDgv.DataSource = SearchReservation(tripId.ToString());
-                reservationsDgv.Columns["Values"].Visible = false;
-                reservationsDgv.Columns["TableName"].Visible = false;
-                reservationsDgv.Columns["Id"].Visible = false;
-                reservationsDgv.ClearSelection();
+                var dataSource = SearchReservation(tripId.ToString());
+                if (dataSource != null)
+                {
+                    reservationsDgv.DataSource = dataSource;
+                    reservationsDgv.Columns["Values"].Visible = false;
+                    reservationsDgv.Columns["TableName"].Visible = false;
+                    reservationsDgv.Columns["Id"].Visible = false;
+                    reservationsDgv.ClearSelection();
+                }
             }
         }
         private void passengerDgv_DoubleClick(object sender, EventArgs e)
@@ -204,11 +223,15 @@ namespace Client.UserControls
             if (editBtn.Enabled) SetPassengerFields(true);
             else
             {
-                reservationsDgv.DataSource = SearchReservation(passengerJmbg);
-                reservationsDgv.Columns["Values"].Visible = false;
-                reservationsDgv.Columns["TableName"].Visible = false;
-                reservationsDgv.Columns["Id"].Visible = false;
-                reservationsDgv.ClearSelection();
+                var dataSource = SearchReservation(passengerJmbg);
+                if (dataSource != null)
+                {
+                    reservationsDgv.DataSource = dataSource;
+                    reservationsDgv.Columns["Values"].Visible = false;
+                    reservationsDgv.Columns["TableName"].Visible = false;
+                    reservationsDgv.Columns["Id"].Visible = false;
+                    reservationsDgv.ClearSelection();
+                }
             }
         }
         private void reservationsDgv_DoubleClick(object sender, EventArgs e)
@@ -343,10 +366,14 @@ namespace Client.UserControls
         }
         private void LoadPassengersDgv()
         {
-            passengersDgv.DataSource = SearchPassenger();
-            passengersDgv.Columns["TableName"].Visible = false;
-            passengersDgv.Columns["Values"].Visible = false;
-            passengersDgv.Columns["JMBG"].Visible = false;
+            var dataSource = SearchDestination();
+            if (dataSource != null)
+            {
+                passengersDgv.DataSource = dataSource;
+                passengersDgv.Columns["TableName"].Visible = false;
+                passengersDgv.Columns["Values"].Visible = false;
+                passengersDgv.Columns["JMBG"].Visible = false;
+            }
         }
         private void discardBtn_Click(object sender, EventArgs e)
         {
@@ -412,17 +439,25 @@ namespace Client.UserControls
         }
         private void LoadDestinationsDgv()
         {
-            destinationsDgv.DataSource = SearchDestination();
-            destinationsDgv.Columns["TableName"].Visible = false;
-            destinationsDgv.Columns["Values"].Visible = false;
-            destinationsDgv.Columns["Id"].Visible = false;
+            var dataSource = SearchDestination();
+            if (dataSource != null)
+            {
+                destinationsDgv.DataSource = dataSource;
+                destinationsDgv.Columns["TableName"].Visible = false;
+                destinationsDgv.Columns["Values"].Visible = false;
+                destinationsDgv.Columns["Id"].Visible = false;
+            }
         }
         private void searchDestinationTb_TextChanged(object sender, EventArgs e)
         {
-            destinationsDgv.DataSource = SearchDestination(searchDestinationTb.Text);
-            destinationsDgv.Columns["TableName"].Visible = false;
-            destinationsDgv.Columns["Values"].Visible = false;
-            destinationsDgv.Columns["Id"].Visible = false;
+            var dataSource = SearchDestination(searchDestinationTb.Text);
+            if (dataSource != null)
+            {
+                destinationsDgv.DataSource = dataSource;
+                destinationsDgv.Columns["TableName"].Visible = false;
+                destinationsDgv.Columns["Values"].Visible = false;
+                destinationsDgv.Columns["Id"].Visible = false;
+            }
 
         }
         private void deleteBtn_Click(object sender, EventArgs e)
@@ -458,7 +493,6 @@ namespace Client.UserControls
 
 
         }
-
         private void reservationDp_ValueChanged(object sender, EventArgs e)
         {
             Console.WriteLine("Odabran item u Cb-u " + searchByCb.SelectedIndex);
