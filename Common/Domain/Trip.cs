@@ -20,7 +20,7 @@ namespace Common.Domain
 
         public override string ToString()
         {
-            return $"{Destination}, {DepartureDate} - {ArrivalDate}";
+            return $"{Destination}, {DepartureDate} - {ArrivalDate.Date}";
         }
         public List<IEntity> GetReaderList(SqlDataReader reader)
         {

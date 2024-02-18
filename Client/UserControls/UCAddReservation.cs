@@ -102,7 +102,7 @@ namespace Client.UserControls
         private void addReservationBtn_Click(object sender, EventArgs e)
         {
             if (CheckFields()) AddTrip();
-            else MessageBox.Show("Some fields are empty");
+            else MessageBox.Show("Some fields are empty", "Reservation cannot be added", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
         private void AddTrip()
         {
@@ -124,9 +124,12 @@ namespace Client.UserControls
         }
         public void SetPassengerFields()
         {
-            firstNameTb.Text = (string)passengersDgv.SelectedRows[0].Cells["FirstName"].Value;
-            lastNameTb.Text = (string)passengersDgv.SelectedRows[0].Cells["LastName"].Value;
-            phoneTb.Text = (string)passengersDgv.SelectedRows[0].Cells["Phone"].Value;
+            if (passengersDgv.Rows.Count > 0)
+            {
+                firstNameTb.Text = (string)passengersDgv.SelectedRows[0].Cells["FirstName"].Value;
+                lastNameTb.Text = (string)passengersDgv.SelectedRows[0].Cells["LastName"].Value;
+                phoneTb.Text = (string)passengersDgv.SelectedRows[0].Cells["Phone"].Value;
+            }
         }
         private void Dp_DropDown(object sender, EventArgs e)
         {
@@ -140,7 +143,17 @@ namespace Client.UserControls
         }
         private void searchPassengerTb_TextChanged(object sender, EventArgs e)
         {
-            passengersDgv.DataSource = SearchPassenger(searchPassengerTb.Text);
+            var dataSource = SearchPassenger(searchPassengerTb.Text);
+            if (dataSource != null)
+            {
+                passengersDgv.DataSource = dataSource;
+                if (passengersDgv.Rows.Count > 0)
+                {
+                    passengersDgv.Columns["JMBG"].Visible = false;
+                    passengersDgv.Columns["TableName"].Visible = false;
+                    passengersDgv.Columns["Values"].Visible = false;
+                }
+            }
         }
         private object SearchPassenger(string enteredValue = "")
         {
@@ -169,17 +182,31 @@ namespace Client.UserControls
         private void destinationsDgv_DoubleClick(object sender, EventArgs e)
         {
             int destinationId = (int)destinationsDgv.SelectedRows[0].Cells["Id"].Value;
-            tripsDgv.DataSource = SearchTrips(destinationId.ToString());
-            if (tripsDgv.Columns.Count > 0)
+            var dataSource = SearchTrips(destinationId.ToString());
+            if (dataSource != null)
             {
-                tripsDgv.Columns["TableName"].Visible = false;
-                tripsDgv.Columns["Values"].Visible = false;
-                tripsDgv.Columns["Id"].Visible = false;
+                tripsDgv.DataSource = dataSource;
+                if (tripsDgv.Columns.Count > 0)
+                {
+                    tripsDgv.Columns["TableName"].Visible = false;
+                    tripsDgv.Columns["Values"].Visible = false;
+                    tripsDgv.Columns["Id"].Visible = false;
+                }
             }
         }
         private void searchDestinationTb_TextChanged(object sender, EventArgs e)
         {
-            destinationsDgv.DataSource = SearchDestination(searchDestinationTb.Text);
+            var dataSource = SearchDestination(searchDestinationTb.Text);
+            if (dataSource != null)
+            {
+                destinationsDgv.DataSource = dataSource;
+                if (destinationsDgv.Rows.Count > 0)
+                {
+                    destinationsDgv.Columns["TableName"].Visible = false;
+                    destinationsDgv.Columns["Values"].Visible = false;
+                    destinationsDgv.Columns["Id"].Visible = false;
+                }
+            }
         }
         private bool CheckFields()
         {

@@ -30,11 +30,11 @@ namespace Client.Controller
             }
             else if (res.Result != null)
             {
-                MessageBox.Show($"Reservation succesfully added!");
+                MessageBox.Show("Reservation succesfully added!", "Reservation succesfully added!", MessageBoxButtons.OK,MessageBoxIcon.Information);
             }
             else
             {
-                MessageBox.Show("Reservation already exists");
+                MessageBox.Show("Reservation already exists", "Reservation cannot be added", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

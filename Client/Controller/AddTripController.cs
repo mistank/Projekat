@@ -25,18 +25,18 @@ namespace Client.Controller
                 Debug.WriteLine(res.Exception.Message);
                 if (res.Exception.Message == "Server closed")
                 {
-                    MessageBox.Show("Server closed");
+                    MessageBox.Show("Server closed", "Adding trip unsuccessful.. Try again", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     MainController.Instance.frmMain.Dispose();
                     LoginController.Instance.frmLogin.Dispose();
                 }
             }
             else if (res.Result != null)
             {
-                MessageBox.Show($"Trip succesfully added!");
+                MessageBox.Show($"Trip {trip} successfuly added!","Trip successfully added!", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
-                MessageBox.Show("Trip already exists");
+                MessageBox.Show("Trip already exists", "Adding trip unsuccessful.. Try again", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
        

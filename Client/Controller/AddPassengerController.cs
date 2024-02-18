@@ -26,7 +26,7 @@ namespace Client.Controller
                 Debug.WriteLine(res.Exception.Message);
                 if (res.Exception.Message == "Server closed")
                 {
-                    MessageBox.Show("Server closed");
+                    MessageBox.Show("Server closed","Error", MessageBoxButtons.OK,MessageBoxIcon.Error);
                     MainController.Instance.frmMain.Dispose();
                     LoginController.Instance.frmLogin.Dispose();
                 }
@@ -37,7 +37,7 @@ namespace Client.Controller
             }
             else
             {
-                MessageBox.Show("passenger already exists");
+                MessageBox.Show("Passenger already exists", "Adding passenger unsuccessful.. Try again", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             

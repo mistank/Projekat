@@ -21,7 +21,7 @@ namespace Client.Controller
             Response res = Communication.Instance.Login(user);
             if (res.Exception == null)
             {
-                MessageBox.Show("Uspesan Login");
+                MessageBox.Show("Login successful" ,$"Welcome {user.FirstName}", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 frmLogin.Visible = false;
                 MainController.Instance.ShowFrmMain((User)res.Result);
             }
@@ -29,13 +29,13 @@ namespace Client.Controller
             {
                 if (res.Exception.Message == "Server closed")
                 {
-                    MessageBox.Show("Server closed");
-                    MainController.Instance.frmMain.Dispose();
-                    LoginController.Instance.frmLogin.Dispose();
+                    MessageBox.Show("Server closed", "Login unsuccessful.. Try again", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MainController.Instance.frmMain?.Dispose();
+                    LoginController.Instance.frmLogin?.Dispose();
                 }
                 else
                 {
-                    MessageBox.Show(res.Exception.Message);
+                    MessageBox.Show(res.Exception.Message, "Login unsuccessful.. Try again", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
 

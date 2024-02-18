@@ -26,12 +26,16 @@ namespace Client.Controller
             }
             else
             {
-                Debug.WriteLine(res.Exception);
+               
                 if (res.Exception.Message == "Server closed")
                 {
-                    MessageBox.Show("Server closed");
+                    MessageBox.Show("Server closed", "Searching trip unsuccessful.. Try again", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     MainController.Instance.frmMain.Dispose();
                     LoginController.Instance.frmLogin.Dispose();
+                }
+                else
+                {
+                    MessageBox.Show(res.Exception.Message, "Searching tri unsuccessful.. Try again", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 return null;
             }
