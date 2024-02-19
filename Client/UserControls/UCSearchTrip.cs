@@ -12,12 +12,14 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Forms;
 
 namespace Client.UserControls
 {
     public partial class UCSearchTrip : UserControl
     {
+        private bool editing = false;
         public UCSearchTrip()
         {
             InitializeComponent();
@@ -102,11 +104,19 @@ namespace Client.UserControls
         }
         private void searchBarTb_TextChanged(object sender, EventArgs e)
         {
-            tripsDgv.DataSource = SearchTrips(searchTb.Text);
+            var dataSource = SearchTrips(searchTb.Text);
+            if (dataSource != null)
+            {
+                tripsDgv.DataSource = dataSource;
+                tripsDgv.Columns["Values"].Visible = false;
+                tripsDgv.Columns["TableName"].Visible = false;
+                tripsDgv.Columns["Id"].Visible = false;
+                tripsDgv.ClearSelection();
+            }
         }
         private void searchByCb_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (searchByCb.SelectedIndex != -1)
+            if ( searchByCb.SelectedIndex != -1)
             {
                 LoadDgv();
                 switch (((PropertyInfo)searchByCb.SelectedItem).Name)
@@ -150,14 +160,29 @@ namespace Client.UserControls
                         break;
                 }
             }
-            else searchTb.Enabled = false;
+            else
+            {
+                searchTb.Enabled = false;
+                arrivalDateDp.Enabled = false;
+                departureDateDp.Enabled = false;
+                destinationSearchPanel.Visible = false;
+                destinationsDgv.Enabled = false;
+                searchDestinationTb.Enabled = false;
+            }
         }
         private void tripsDgv_DoubleClick(object sender, EventArgs e)
         {
-            editBtn.Enabled = true;
-            searchByCb.Enabled = false;
-            searchTb.Enabled = false;
-            SetFields();
+            if (tripsDgv.Rows.Count > 0)
+            {
+
+                editBtn.Enabled = true;
+                searchByCb.SelectedIndex = -1;
+                searchByCb.Enabled = false;
+                searchTb.Enabled = false;
+
+                SetFields();
+                MessageBox.Show("The system has successfully entered the trip", "Trip entered!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
         public void SetFields()
         {
@@ -176,47 +201,53 @@ namespace Client.UserControls
                 tb.Text = "";
             }
         }
+        private bool TripValidation()
+        {
+            if (departureDateDp.Value.Date < DateTime.Now.Date || departureDateDp.Value.Date >= arrivalDateDp.Value.Date)
+            {
+                MessageBox.Show("Departure date must not be in the past and has to be before the arrival date", "Trip edit unsuccessful.. Try again", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                arrivalDateDp.BorderColor = Color.Red;
+                departureDateDp.BorderColor = Color.Red;
+
+                arrivalDateDp.BorderThickness = 1;
+                departureDateDp.BorderThickness = 1;
+                destinationTb.BorderThickness = 1;
+                priceTb.BorderThickness = 0;
+                return false;
+            }
+            else if (!priceTb.Text.All(char.IsDigit) || string.IsNullOrEmpty(priceTb.Text))
+            {
+                MessageBox.Show("Price format is not correct","Trip edit unsuccessful.. Try again", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                priceTb.BorderColor = Color.Red;
+                departureDateDp.BorderThickness = 0;
+                arrivalDateDp.BorderThickness = 0;
+                destinationTb.BorderThickness = 0;
+                priceTb.BorderThickness = 1;
+                return false;
+            }
+            else if (string.IsNullOrEmpty(destinationTb.Text))
+            {
+                MessageBox.Show("Enter destination", "Trip edit unsuccessful.. Try again", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                destinationTb.BorderColor = Color.Red;
+                destinationTb.BorderThickness = 1;
+
+                departureDateDp.BorderThickness = 0;
+                arrivalDateDp.BorderThickness = 0;
+                priceTb.BorderColor = Color.Red;
+                priceTb.BorderThickness = 1;
+                return false;
+            }
+            return true;
+        }
         private void saveBtn_Click(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show("Confirm saving changes?", "Saving Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
 
-                if (departureDateDp.Value.Date < DateTime.Now.Date || departureDateDp.Value.Date >= arrivalDateDp.Value.Date)
-                {
-                    MessageBox.Show("Departure date must not be in the past and has to be before the arrival date");
-
-                    arrivalDateDp.BorderColor = Color.Red;
-                    departureDateDp.BorderColor = Color.Red;
-
-                    arrivalDateDp.BorderThickness = 1;
-                    departureDateDp.BorderThickness = 1;
-                    destinationTb.BorderThickness = 1;
-                    priceTb.BorderThickness = 0;
-                }
-                else if (!priceTb.Text.All(char.IsDigit) || string.IsNullOrEmpty(priceTb.Text))
-                {
-                    MessageBox.Show("Price format is not correct");
-
-                    priceTb.BorderColor = Color.Red;
-                    departureDateDp.BorderThickness = 0;
-                    arrivalDateDp.BorderThickness = 0;
-                    destinationTb.BorderThickness = 0;
-                    priceTb.BorderThickness = 1;
-
-                }
-                else if (string.IsNullOrEmpty(destinationTb.Text))
-                {
-                    MessageBox.Show("Enter destination");
-                    destinationTb.BorderColor = Color.Red;
-                    destinationTb.BorderThickness = 1;
-
-                    departureDateDp.BorderThickness = 0;
-                    arrivalDateDp.BorderThickness = 0;
-                    priceTb.BorderColor = Color.Red;
-                    priceTb.BorderThickness = 1;
-                }
-                else
+                if(TripValidation())
                 {
                     EditTrips();
                     saveDiscardPanel.Visible = false;
@@ -231,6 +262,8 @@ namespace Client.UserControls
                     tripsDgv.ClearSelection();
                     editBtn.Enabled = false;
                     searchDestinationTb.Text = "";
+                    editing = false;
+                    MessageBox.Show($"Trip successfuly edited!", "Trip successfully edited!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }
@@ -247,10 +280,17 @@ namespace Client.UserControls
             searchDestinationTb.Enabled = false;
             destinationsDgv.Enabled = false;
             priceTb.Enabled = false;
+
+            departureDateDp.Enabled = false;
+            arrivalDateDp.Enabled = false;
+            editing = false;
+            ClearFields();
         }
         private void editBtn_Click(object sender, EventArgs e)
         {
             editBtn.Visible = false;
+            editBtn.Enabled = false;
+
             saveDiscardPanel.Visible = true;
             fieldsPanel.Enabled = true;
             tripsDgv.Enabled = false;
@@ -262,7 +302,10 @@ namespace Client.UserControls
             departureDateDp.Enabled = true;
             arrivalDateDp.Enabled = true;
 
+            editing = true;
             LoadDestinationsDgv();
+
+
         }
         private void deleteBtn_Click(object sender, EventArgs e)
         {
@@ -282,6 +325,7 @@ namespace Client.UserControls
             departureDateDp.Enabled = false;
             arrivalDateDp.Enabled = false;
 
+            editing = false;
             ClearFields();
         }
         private object SearchDestination(string enteredValue = "")
@@ -298,30 +342,50 @@ namespace Client.UserControls
         }
         private void destinationsDgv_DoubleClick(object sender, EventArgs e)
         {
-            int destinationId = (int)destinationsDgv.SelectedRows[0].Cells["Id"].Value;
-            if (!editBtn.Enabled)
+            if (destinationsDgv.Rows.Count > 0)
             {
-                tripsDgv.DataSource = SearchTrips(destinationId.ToString());
-                if (tripsDgv.Columns.Count > 0)
+                int destinationId = (int)destinationsDgv.SelectedRows[0].Cells["Id"].Value;
+                if (!editBtn.Enabled)
                 {
-                    tripsDgv.Columns["TableName"].Visible = false;
-                    tripsDgv.Columns["Values"].Visible = false;
-                    tripsDgv.Columns["Id"].Visible = false;
+                    tripsDgv.DataSource = SearchTrips(destinationId.ToString());
+                    if (tripsDgv.Columns.Count > 0)
+                    {
+                        MessageBox.Show( "System found a trip with the specified values.", "Trip found!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        tripsDgv.Columns["TableName"].Visible = false;
+                        tripsDgv.Columns["Values"].Visible = false;
+                        tripsDgv.Columns["Id"].Visible = false;
+                    }
+                    else
+                    {
+                        MessageBox.Show("System didn't find a trip with the specified values.", "Trip not found!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                else
+                {
+                    int destinationRowIndex = destinationsDgv.SelectedRows[0].Index;
+                    destinationTb.Text = destinationsDgv.Rows[destinationRowIndex].DataBoundItem.ToString();
                 }
             }
-            else
-            {
-                int destinationRowIndex = destinationsDgv.SelectedRows[0].Index;
-                destinationTb.Text = destinationsDgv.Rows[destinationRowIndex].DataBoundItem.ToString();
-            }
+            
         }
         private void searchDestinationTb_TextChanged(object sender, EventArgs e)
         {
-            destinationsDgv.DataSource = SearchDestination(searchDestinationTb.Text);
+            var dataSource = SearchDestination(searchDestinationTb.Text);
+            if (dataSource != null)
+            {
+                destinationsDgv.DataSource = dataSource;
+                if (destinationsDgv.Rows.Count > 0)
+                {
+                    destinationsDgv.Columns["Values"].Visible = false;
+                    destinationsDgv.Columns["TableName"].Visible = false;
+                    destinationsDgv.Columns["Id"].Visible = false;
+                    destinationsDgv.ClearSelection();
+                }
+            }
         }
         private void Dp_ValueChanged(object sender, EventArgs e)
         {
-            if (!editBtn.Enabled)
+            if (!editBtn.Enabled && !editing)
             {
                 DateTime searchDate = ((Guna2DateTimePicker)sender).Value;
                 tripsDgv.DataSource = SearchTrips(string.Format("{0:yyyy-MM-dd}", searchDate));
@@ -330,9 +394,9 @@ namespace Client.UserControls
                     tripsDgv.Columns["Values"].Visible = false;
                     tripsDgv.Columns["TableName"].Visible = false;
                     tripsDgv.Columns["Id"].Visible = false;
+                    MessageBox.Show("System found a trip with the specified values.", "Trip found!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     tripsDgv.ClearSelection();
                 }
-
             }
         }
     }

@@ -109,25 +109,62 @@ namespace Client.UserControls
         {
             SetFields();
             editBtn.Enabled = true;
+            MessageBox.Show("The system has successfully entered the passenger", "Passenger entered!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
         }
         private void saveBtn_Click(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show("Confirm saving changes?", "Saving Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
-                EditPassenger();
-                saveDiscardPanel.Visible = false;
-                editBtn.Visible = true;
-                passengersDgv.DataSource = SearchPassenger();
-                passengersDgv.Enabled = true;
-                fieldsPanel.Enabled = false;
-                searchTb.Text = "";
-                ClearFields();
-            }
-            else
-            {
-            }
+                if (CheckFields() && CheckPhoneNumber() && CheckNames()){
+                    EditPassenger();
+                    saveDiscardPanel.Visible = false;
+                    editBtn.Visible = true;
+                    passengersDgv.DataSource = SearchPassenger();
+                    passengersDgv.Enabled = true;
+                    fieldsPanel.Enabled = false;
+                    searchTb.Text = "";
+                    ClearFields();
+                    MessageBox.Show("The system has successfully edited the passenger", "Passenger edited!", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+                }
+            }
+        }
+
+        private bool CheckNames()
+        {
+            if (firstNameTb.Text.Any(char.IsDigit) || lastNameTb.Text.Any(char.IsDigit)) return false;
+            return true;
+        }
+
+        private bool CheckPhoneNumber()
+        {
+            if (phoneTb.Text.Length != 10 || !phoneTb.Text.All(char.IsDigit))
+            {
+                MessageBox.Show("Wrong phone number format","Editing a passenger has failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            return true;
+        }
+        private bool CheckFields()
+        {
+            bool fieldsEntered = true;
+            foreach (Guna2TextBox tb in fieldsPanel.Controls.OfType<Guna2TextBox>().ToList())
+            {
+                if (string.IsNullOrEmpty(tb.Text) || tb.Text.Trim(' ').Contains(" "))
+                {
+                    fieldsEntered = false;
+                    tb.BorderColor = Color.Red;
+                    tb.BorderThickness = 1;
+                }
+                else
+                {
+                    tb.BorderThickness = 0;
+                }
+            }
+            if (!fieldsEntered) MessageBox.Show("Some fields are empty or contain spaces", "Editing a passenger has failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return fieldsEntered;
         }
         private void discardBtn_Click(object sender, EventArgs e)
         {

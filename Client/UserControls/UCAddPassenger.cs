@@ -39,7 +39,7 @@ namespace Client.UserControls
         {
             if (JMBGTb.Text.Length != 13 || !JMBGTb.Text.All(char.IsDigit))
             {
-                MessageBox.Show("Wrong JMBG format");
+                MessageBox.Show("Wrong JMBG format", "Adding passenger unsuccessful.. Try again", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
             return true;
@@ -60,7 +60,7 @@ namespace Client.UserControls
                     tb.BorderThickness = 0;
                 }
             }
-            if(!fieldsEntered) MessageBox.Show("Some fields are empty");
+            if(!fieldsEntered) MessageBox.Show("Some fields are empty", "Adding passenger unsuccessful.. Try again", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return fieldsEntered;
         }
         public void AddPassenger()

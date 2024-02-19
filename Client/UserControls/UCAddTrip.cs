@@ -26,15 +26,15 @@ namespace Client.UserControls
         {
             if (departureDateDp.Value.Date<DateTime.Now.Date || departureDateDp.Value.Date >= arrivalDataDp.Value.Date)
             {
-                MessageBox.Show("Departure date must not be in the past and has to be before the arrival date");
+                MessageBox.Show("Departure date must not be in the past and has to be before the arrival date", "Adding trip unsuccessful.. Try again", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else if (!priceTb.Text.All(char.IsDigit) || string.IsNullOrEmpty(priceTb.Text))
             {
-                MessageBox.Show("Price format is not correct");
+                MessageBox.Show("Price format is not correct", "Adding trip unsuccessful.. Try again", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else if (string.IsNullOrEmpty(destinationTb.Text))
             {
-                MessageBox.Show("Enter destination");
+                MessageBox.Show("Enter destination", "Adding trip unsuccessful.. Try again", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
@@ -81,6 +81,8 @@ namespace Client.UserControls
             string name = (string)destinationsDgv.SelectedRows[0].Cells["DestinationName"].Value;
             string state = destinationsDgv.SelectedRows[0].Cells["State"].Value.ToString();
             destinationTb.Text = $"{name}, {state}";
+            searchDestinationTb.Text = "";
+            searchDestinationTb.Enabled = false;
         }
         private void searchDestinationTb_TextChanged(object sender, EventArgs e)
         {

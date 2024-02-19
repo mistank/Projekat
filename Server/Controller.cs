@@ -57,11 +57,11 @@ namespace Server
         {
             if (!UserLoggedIn(user))
             {
-                ActiveUsers.Add(user);
                 LoginSO login = new LoginSO(user);
                 login.ExecuteTemplate();
                 User logResult = (User)login.Result;
-                if (logResult == null) return new Exception("Incorrect username or password.");
+                if (logResult == null) return new Exception("User not found.");
+                else ActiveUsers.Add(logResult);
                 return (User)login.Result;
             }
             else
