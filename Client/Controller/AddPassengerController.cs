@@ -23,7 +23,6 @@ namespace Client.Controller
             Response res = Communication.Instance.Add(passenger);
             if (res.Exception != null)
             {
-                Debug.WriteLine(res.Exception.Message);
                 if (res.Exception.Message == "Server closed")
                 {
                     MessageBox.Show("Server closed","Error", MessageBoxButtons.OK,MessageBoxIcon.Error);
@@ -33,7 +32,7 @@ namespace Client.Controller
             }
             else if (res.Result != null)
             {
-                MessageBox.Show($"Passenger {passenger} succesfully added!");
+                MessageBox.Show($"Passenger {passenger} succesfully added!", "Adding passenger successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {

@@ -20,7 +20,6 @@ namespace Client.UserControls
     public partial class UCSearchTrip : UserControl
     {
         private bool editing = false;
-        private bool selected = false;
         public UCSearchTrip()
         {
             InitializeComponent();
@@ -117,7 +116,7 @@ namespace Client.UserControls
         }
         private void searchByCb_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!selected && searchByCb.SelectedIndex != -1)
+            if ( searchByCb.SelectedIndex != -1)
             {
                 LoadDgv();
                 switch (((PropertyInfo)searchByCb.SelectedItem).Name)
@@ -163,13 +162,12 @@ namespace Client.UserControls
             }
             else
             {
-                //searchTb.Enabled = false;
-                //arrivalDateDp.Enabled = false;
-                //departureDateDp.Enabled = false;
-                //destinationSearchPanel.Visible = false;
-                //destinationsDgv.Enabled = false;
-                //searchDestinationTb.Enabled = false;
-                searchByCb.SelectedIndex = -1;
+                searchTb.Enabled = false;
+                arrivalDateDp.Enabled = false;
+                departureDateDp.Enabled = false;
+                destinationSearchPanel.Visible = false;
+                destinationsDgv.Enabled = false;
+                searchDestinationTb.Enabled = false;
             }
         }
         private void tripsDgv_DoubleClick(object sender, EventArgs e)
@@ -181,7 +179,6 @@ namespace Client.UserControls
                 searchByCb.SelectedIndex = -1;
                 searchByCb.Enabled = false;
                 searchTb.Enabled = false;
-                selected = true;
 
                 SetFields();
                 MessageBox.Show("The system has successfully entered the trip", "Trip entered!", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -397,7 +394,7 @@ namespace Client.UserControls
                     tripsDgv.Columns["Values"].Visible = false;
                     tripsDgv.Columns["TableName"].Visible = false;
                     tripsDgv.Columns["Id"].Visible = false;
-                    //MessageBox.Show("System found a trip with the specified values.", "Trip found!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("System found a trip with the specified values.", "Trip found!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     tripsDgv.ClearSelection();
                 }
             }

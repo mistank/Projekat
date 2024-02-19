@@ -109,6 +109,8 @@ namespace Client.UserControls
         {
             SetFields();
             editBtn.Enabled = true;
+            MessageBox.Show("The system has successfully entered the passenger", "Passenger entered!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
         }
         private void saveBtn_Click(object sender, EventArgs e)
         {
@@ -124,6 +126,8 @@ namespace Client.UserControls
                     fieldsPanel.Enabled = false;
                     searchTb.Text = "";
                     ClearFields();
+                    MessageBox.Show("The system has successfully edited the passenger", "Passenger edited!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                 }
             }
         }
@@ -138,7 +142,7 @@ namespace Client.UserControls
         {
             if (phoneTb.Text.Length != 10 || !phoneTb.Text.All(char.IsDigit))
             {
-                MessageBox.Show("Wrong phone number format","Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Wrong phone number format","Editing a passenger has failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
             return true;
@@ -159,7 +163,7 @@ namespace Client.UserControls
                     tb.BorderThickness = 0;
                 }
             }
-            if (!fieldsEntered) MessageBox.Show("Some fields are empty or contain spaces", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            if (!fieldsEntered) MessageBox.Show("Some fields are empty or contain spaces", "Editing a passenger has failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return fieldsEntered;
         }
         private void discardBtn_Click(object sender, EventArgs e)

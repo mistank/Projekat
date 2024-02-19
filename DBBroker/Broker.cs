@@ -97,71 +97,6 @@ namespace DBBroker
             cmd.Dispose();
             return rowsAffected == 1 ? obj : null;
         }
-        public string GetSelectQuery(Type table)
-        {
-            string selectQuery = "";
-            Type interfaceType = typeof(IEntity); List<PropertyInfo> properties = table.GetProperties().ToList();
-            string pk = GetAllPrimaryKeys(table.Name)[0];
-            foreach (PropertyInfo property in properties)
-            {
-                if (property.PropertyType.GetInterfaces().Contains(interfaceType))
-                {
-                     pk = GetAllPrimaryKeys(property.Name)[0];
-                    selectQuery += $"{property.Name}.{pk} as {property.Name}_{pk}," + GetSelectQuery(property.PropertyType);
-                }
-                else selectQuery += $"{property.Name}.{pk} as {property.Name}_{pk},";
-            }
-            return selectQuery;
-        }
-        public string GetJoinQuery(Type table)
-        {
-            string joinQuery = "";
-            Type interfaceType = typeof(IEntity);
-            List<PropertyInfo> properties = table.GetProperties().ToList();
-            foreach (PropertyInfo property in properties)
-            {
-                if (property.PropertyType.GetInterfaces().Contains(interfaceType))
-                {
-                    string pk = GetAllPrimaryKeys(property.Name)[0];
-                    joinQuery += $"join {property.Name} on ({table.Name}.{property.Name} = {property.Name}.{pk}) " + GetJoinQuery(property.PropertyType);
-                }
-                else joinQuery += "";
-            }
-            return joinQuery;
-        }
-        public IEntity CreateObject(Type objType, SqlDataReader reader)
-        {
-            List<PropertyInfo> properties = objType.GetProperties().Where(prop => prop.Name != "TableName" && prop.Name != "Values").ToList();
-            ConstructorInfo constructor = objType.GetConstructor(Type.EmptyTypes);
-            IEntity obj = (IEntity)constructor.Invoke(Type.EmptyTypes);
-            foreach (PropertyInfo property in properties)
-            {
-                if (property.PropertyType.GetInterfaces().Contains(typeof(IEntity)))
-                {
-                    IEntity innerObj = CreateObject(property.PropertyType, reader);
-                    property.SetValue(obj, innerObj);
-                }
-                else if(property.Name == GetAllPrimaryKeys(objType.Name)[0])
-                {
-                    property.SetValue(obj, reader[$"{objType.Name}_" + property.Name]);
-                }
-                else
-                {
-                    property.SetValue(obj, reader[property.Name]);
-                }
-            }
-            return obj;
-        }
-        public object SearchNew(SearchValue searchValue)
-        {
-            SqlCommand cmd = connection.CreateCommand();
-
-            cmd.CommandText = $"select {GetSelectQuery(searchValue.Type)} * from {searchValue.Type.Name} {GetJoinQuery(searchValue.Type)}";
-            SqlDataReader reader = cmd.ExecuteReader();
-            ConstructorInfo constructor = searchValue.Type.GetConstructor(Type.EmptyTypes);
-            IEntity obj = CreateObject(searchValue.Type,reader);
-            return obj;
-        }
         public object Search(SearchValue searchValue)
         {
             string searchQuery;
@@ -281,15 +216,6 @@ namespace DBBroker
         }
         public object Edit(EditValue editValue)
         {
-            //ConstructorInfo constructor = editValue.Type.GetConstructor(Type.EmptyTypes);
-
-            //ako program ne radi otkomentarisi ovo
-
-            ////inicijalizacija objekta te klase 
-            //IEntity obj = (IEntity)constructor.Invoke(null);
-            ////nazivi kolona u tabeli   
-            //List<string> propertyNames = editValue.Type.GetProperties().Select(prop => prop.Name).Where(prop => prop != "TableName" && prop != "Values").ToList();
-
             SqlCommand cmd = connection.CreateCommand();
             cmd.CommandText = getUpdateQuery(editValue);
             Console.WriteLine(cmd.CommandText);

@@ -359,6 +359,9 @@ namespace Client.UserControls
                 searchDestinationTb.Text = "";
                 searchPassengerTb.Text = "";
                 LoadDgv();
+
+                MessageBox.Show($"Reservation successfuly edited!", "Reservation successfully edited!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
             }
         }
         private void editBtn_Click(object sender, EventArgs e)
