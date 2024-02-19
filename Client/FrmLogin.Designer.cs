@@ -42,6 +42,7 @@ namespace Client
             this.guna2Shapes1 = new Guna.UI2.WinForms.Guna2Shapes();
             this.guna2ShapesTool1 = new Guna.UI2.WinForms.Guna2ShapesTool(this.components);
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
+            this.showPasswordBtn = new Guna.UI2.WinForms.Guna2ImageButton();
             this.label2 = new System.Windows.Forms.Label();
             this.usernameTb = new Guna.UI2.WinForms.Guna2TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -51,7 +52,6 @@ namespace Client
             this.guna2Shapes2 = new Guna.UI2.WinForms.Guna2Shapes();
             this.guna2Shapes3 = new Guna.UI2.WinForms.Guna2Shapes();
             this.exitBtn = new Guna.UI2.WinForms.Guna2Button();
-            this.showPasswordBtn = new Guna.UI2.WinForms.Guna2ImageButton();
             this.guna2Panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -94,6 +94,26 @@ namespace Client
             this.guna2Panel1.Size = new System.Drawing.Size(576, 1042);
             this.guna2Panel1.TabIndex = 9;
             this.guna2Panel1.UseTransparentBackground = true;
+            this.guna2Panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FrmLogin_MouseDown);
+            this.guna2Panel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.FrmLogin_MouseMove);
+            this.guna2Panel1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.FrmLogin_MouseUp);
+            // 
+            // showPasswordBtn
+            // 
+            this.showPasswordBtn.CheckedState.ImageSize = new System.Drawing.Size(30, 30);
+            this.showPasswordBtn.HoverState.ImageSize = new System.Drawing.Size(30, 30);
+            this.showPasswordBtn.Image = global::Client.Properties.Resources.show_pass;
+            this.showPasswordBtn.ImageOffset = new System.Drawing.Point(0, 0);
+            this.showPasswordBtn.ImageRotate = 0F;
+            this.showPasswordBtn.ImageSize = new System.Drawing.Size(30, 30);
+            this.showPasswordBtn.Location = new System.Drawing.Point(488, 689);
+            this.showPasswordBtn.Name = "showPasswordBtn";
+            this.showPasswordBtn.PressedState.Image = global::Client.Properties.Resources.hide_pass;
+            this.showPasswordBtn.PressedState.ImageSize = new System.Drawing.Size(30, 30);
+            this.showPasswordBtn.Size = new System.Drawing.Size(45, 45);
+            this.showPasswordBtn.TabIndex = 24;
+            this.showPasswordBtn.UseTransparentBackground = true;
+            this.showPasswordBtn.Click += new System.EventHandler(this.PasswordButton_Click);
             // 
             // label2
             // 
@@ -242,23 +262,6 @@ namespace Client
             this.exitBtn.MouseEnter += new System.EventHandler(this.exitBtn_MouseEnter);
             this.exitBtn.MouseLeave += new System.EventHandler(this.exitBtn_MouseLeave);
             // 
-            // showPasswordBtn
-            // 
-            this.showPasswordBtn.CheckedState.ImageSize = new System.Drawing.Size(30, 30);
-            this.showPasswordBtn.HoverState.ImageSize = new System.Drawing.Size(30, 30);
-            this.showPasswordBtn.Image = global::Client.Properties.Resources.show_pass;
-            this.showPasswordBtn.ImageOffset = new System.Drawing.Point(0, 0);
-            this.showPasswordBtn.ImageRotate = 0F;
-            this.showPasswordBtn.ImageSize = new System.Drawing.Size(30, 30);
-            this.showPasswordBtn.Location = new System.Drawing.Point(488, 689);
-            this.showPasswordBtn.Name = "showPasswordBtn";
-            this.showPasswordBtn.PressedState.Image = global::Client.Properties.Resources.hide_pass;
-            this.showPasswordBtn.PressedState.ImageSize = new System.Drawing.Size(30, 30);
-            this.showPasswordBtn.Size = new System.Drawing.Size(45, 45);
-            this.showPasswordBtn.TabIndex = 24;
-            this.showPasswordBtn.UseTransparentBackground = true;
-            this.showPasswordBtn.Click += new System.EventHandler(this.PasswordButton_Click);
-            // 
             // FrmLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -274,7 +277,6 @@ namespace Client
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "FrmLogin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Form1";
             this.guna2Panel1.ResumeLayout(false);
             this.guna2Panel1.PerformLayout();
             this.ResumeLayout(false);

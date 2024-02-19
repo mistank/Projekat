@@ -13,7 +13,6 @@ namespace Server.SystemOperations
         protected override void ExecuteConcreteOperation(object parameter = null)
         {
             if (parameter.GetType() == typeof(EditValue)) Result = broker.Edit((EditValue)parameter);
-
         }
     }
 }

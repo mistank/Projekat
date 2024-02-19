@@ -54,10 +54,10 @@ namespace Client
             // 
             this.mainPnl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(14)))), ((int)(((byte)(15)))));
             this.mainPnl.Dock = System.Windows.Forms.DockStyle.Right;
-            this.mainPnl.Location = new System.Drawing.Point(404, 0);
+            this.mainPnl.Location = new System.Drawing.Point(401, 0);
             this.mainPnl.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.mainPnl.Name = "mainPnl";
-            this.mainPnl.Size = new System.Drawing.Size(1286, 968);
+            this.mainPnl.Size = new System.Drawing.Size(1289, 968);
             this.mainPnl.TabIndex = 0;
             // 
             // menuPnl
@@ -76,6 +76,9 @@ namespace Client
             this.menuPnl.Name = "menuPnl";
             this.menuPnl.Size = new System.Drawing.Size(405, 968);
             this.menuPnl.TabIndex = 1;
+            this.menuPnl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FrmMain_MouseDown);
+            this.menuPnl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.FrmMain_MouseMove);
+            this.menuPnl.MouseUp += new System.Windows.Forms.MouseEventHandler(this.FrmMain_MouseUp);
             // 
             // logoutBtn
             // 
@@ -275,6 +278,9 @@ namespace Client
             this.Name = "FrmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FrmMain_MouseDown);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.FrmMain_MouseMove);
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.FrmMain_MouseUp);
             this.menuPnl.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
